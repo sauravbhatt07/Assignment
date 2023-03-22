@@ -1,21 +1,46 @@
-package Marcch21Exception;
-import java.util.Scanner;
+package March22Exception;
 public class Assignment {
-	 void addtwopositive() {
-			Scanner sc=new Scanner(System.in);
+	public static void main(String[] args) {
+		try {
 			try {
-			int x=sc.nextInt();
-			int y=sc.nextInt();
-			System.out.println(" ");
-			String s="Non positive";
-			int n=Integer.parseInt(s);
-			System.out.println(n);
+				// Arithmetic exception
+				int i =50/0;
+				System.out.println(i);
+				}
+				catch(Exception e) {
+				System.out.println(e);
+				}
+			finally {
+				System.out.println("1st finally block after arithmetic exception ");
+			}
+				// null pointer exception
+				try {
+					String s = null;
+					System.out.println(s.length());
+				}
+				catch(Exception e) {
+					System.out.println(e);
+				}
+				finally {
+					System.out.println("2nd finally block after null pointer exception");
+				}
+				// ArrayIndexoutofbound exception
+				try {
+					int arr [] = new int[5];
+					arr[7]=10;
+				}
+				catch(Exception e) {
+					System.out.println(e);
+				}
+				finally {
+					System.out.println("3rd finally block after array index out of bound exception");
+				}
 			}
 			catch(Exception e) {
-				System.out.println(e);
-		}}
-		public static void main(String[] args) {
-			Assignment c=new Assignment();
-				c.addtwopositive();
+				System.out.println(e);		
 			}
+		finally {
+			System.out.println("Differernt unchecked exceptions done");
 		}
+		}
+	}
