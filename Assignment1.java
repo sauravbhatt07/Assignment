@@ -1,76 +1,18 @@
-package April05IO;
-
-
-
-//public class Assignment1 {
-class BankAccount {
-    int balance;
-
-    public BankAccount(int balance) {
-        this.balance = balance;
-    }
-
-    synchronized void deposit(int amount) {
-        balance += amount;
-        System.out.println("Deposited: " + amount);
-        notify(); 
-        try {
-            wait(); 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    synchronized void withdraw(int amount) {
-        if (balance < amount) {
-            try {
-                System.out.println("Waiting for deposit...");
-                wait(); // wait for deposit before withdrawing
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        balance -= amount;
-        System.out.println("Withdrawn: " + amount);
-        notify(); // wake up any waiting thread
-    }
+package April07Collection;
+import java.util.ArrayList;
+// method to store even numbers from 2 to N in an ArrayList and return the ArrayList
+public class Assignment1 {
+public static ArrayList<Integer> storeEvenNumbers(int N) {
+// create an empty ArrayList to store even numbers
+ArrayList<Integer>A1 = new ArrayList<>();
+// Use For loop from 2 to N 
+for (int i = 2; i <= N; i += 2) {
+A1.add(i); 
 }
-
-class Depositor extends Thread {
-   BankAccount account;
-
-    public Depositor(BankAccount account) {
-        this.account = account;
-    }
-
-    public void run() {
-        for (int i = 1; i <= 10; i++) {
-            account.deposit(i * 100);
-        }
-    }
+return A1; // return the ArrayList containing A1 from 2 to N
 }
+public static void main(String[] args) { 	// main method 
+ArrayList<Integer> E = storeEvenNumbers(30);
+System.out.println(E);// print the result of  ArrayList 
+}}
 
-class Withdrawer extends Thread {
-    private BankAccount account;
-
-    public Withdrawer(BankAccount account) {
-        this.account = account;
-    }
-
-    public void run() {
-        for (int i = 1; i <= 10; i++) {
-            account.withdraw(i * 50);
-        }
-    }
-}
-
-public class Assignment1{
-    public static void main(String[] args) {
-        BankAccount account = new BankAccount(0);
-        Depositor depositor = new Depositor(account);
-        Withdrawer withdrawer = new Withdrawer(account);
-
-        depositor.start();
-        withdrawer.start();
-    }
-}
